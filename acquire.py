@@ -2,7 +2,10 @@ from bs4 import BeautifulSoup
 import urllib2
 import re
 
-from mongodb import MongoClient
+from pymongo import MongoClient
+
+client = MongoClient("mongodb://admin:admin@kahana.mongohq.com:10009/courier_db")
+db = client.courier_db
 
 def get_statement_text(url):
 	return 0
@@ -20,6 +23,10 @@ subjects = content.find_all("a",href = re.compile(r'^/personal-statement-example
 
 # subjects[i]["href"] to access href
 for a in subjects:
+
+	subject = re.match(r"^/personal-statement-examples/(.*)-personal-statements$",a["href"]).group(1)
+	print subject
+
 	subject_page = urllib2.urlopen(base_url+a["href"])
 	subject_soup = BeautifulSoup(subject_page.read())
 	statement_chunk = subject_soup.find("div",{"id":"content"})
@@ -35,3 +42,7 @@ for a in subjects:
 			
 			# This is the statement's final text
 			unparsed_text = statement_content.text
+
+			db.statements.insert({"text":unparsed_text,"stars":stars,"subject":subject})
+		else:
+			pass

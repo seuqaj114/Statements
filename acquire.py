@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import urllib2
 import re
 
+from mongodb import MongoClient
+
 def get_statement_text(url):
 	return 0
 
@@ -24,6 +26,12 @@ for a in subjects:
 	statements = statement_chunk.find_all("p")
 
 	for statement in statements[:-1]:
-		if len(statement.find_all("img")) != 0:
-			stars = statement.find_all("img")
+		stars = len(statement.find_all("img"))
+		if stars != 0:
 			# statement.find("a")["href"] to access href
+			statement_page = urllib2.urlopen(base_url+statement.find("a")["href"])
+			statement_soup = BeautifulSoup(statement_page.read())
+			statement_content = soup.find("div",{"id":"editmain"})
+			
+			# This is the statement's final text
+			unparsed_text = statement_content.text

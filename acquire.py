@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib2
 import re
+import sys
 
 from pymongo import MongoClient
 
@@ -34,15 +35,18 @@ for a in subjects:
 
 	for statement in statements[:-1]:
 		stars = len(statement.find_all("img"))
+		print stars
 		if stars != 0:
 			# statement.find("a")["href"] to access href
+			print statement.find("a")["href"]
 			statement_page = urllib2.urlopen(base_url+statement.find("a")["href"])
 			statement_soup = BeautifulSoup(statement_page.read())
-			statement_content = soup.find("div",{"id":"editmain"})
+			statement_content = statement_soup.find("div",{"id":"editmain"})
 			
 			# This is the statement's final text
 			unparsed_text = statement_content.text
 
 			db.statements.insert({"text":unparsed_text,"stars":stars,"subject":subject})
+			print "Insertion complete."
 		else:
 			pass

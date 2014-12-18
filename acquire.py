@@ -8,9 +8,6 @@ from pymongo import MongoClient
 client = MongoClient("mongodb://admin:admin@kahana.mongohq.com:10009/courier_db")
 db = client.courier_db
 
-def get_statement_text(url):
-	return 0
-
 base_url = "https://www.studential.com"
 
 # url of subjects: https://www.studential.com/personal-statement-examples/subjects
@@ -23,7 +20,7 @@ content=chunk.find("div",{"class":"content"})
 subjects = content.find_all("a",href = re.compile(r'^/personal-statement-examples/.*-personal-statements$'))
 
 # subjects[i]["href"] to access href
-for a in subjects:
+for a in subjects[18:]:
 
 	subject = re.match(r"^/personal-statement-examples/(.*)-personal-statements$",a["href"]).group(1)
 	print subject

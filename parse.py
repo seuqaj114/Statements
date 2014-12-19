@@ -15,6 +15,6 @@ db = client.courier_db
 
 for item in db.statements.find():
 	print item["subject"]
-	db.statements.update({"_id":ObjectId(item["_id"])},{"$set":{"text":clean_text(item["text"])}})
+	db.statements.update({"_id":ObjectId(item["_id"])},{"$set":{"text":clean_text(item["text"].lower())}})
 
 print "Parsing complete!"

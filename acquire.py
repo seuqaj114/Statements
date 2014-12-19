@@ -20,7 +20,7 @@ content=chunk.find("div",{"class":"content"})
 subjects = content.find_all("a",href = re.compile(r'^/personal-statement-examples/.*-personal-statements$'))
 
 # subjects[i]["href"] to access href
-for a in subjects[18:]:
+for a in subjects[:]:
 
 	subject = re.match(r"^/personal-statement-examples/(.*)-personal-statements$",a["href"]).group(1)
 	print subject

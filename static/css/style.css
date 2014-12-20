@@ -1,0 +1,32 @@
+html, body {
+	overflow: hidden;
+	text-align: center;
+	font-family: 'Open Sans', sans-serif;
+	background-color: #F7F7F7;
+}
+
+#title {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	text-align: center;
+	font-size: 30px;
+}
+
+#statement {
+	height: 400px;
+	width: 600px;
+	font-size: 18px;
+}
+
+#button-container {
+	text-align: center;
+	font-size: 30px;
+	margin: 15px;
+}
+
+#evaluate, #instructions {
+	height: 40px;
+	width: 120px;
+	font-size: 17px;
+	text-align: center;
+}

@@ -13,12 +13,16 @@ import json
 dirname = os.path.dirname(__file__)
 TEMPLATES_PATH = os.path.join(dirname, 'templates')
 
+settings = { 
+    'static_path': os.path.join(dirname, 'static')
+    }
+
 port = 8000
 
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render(os.path.join(PAGES_PATH, 'main.html'))
+        self.render(os.path.join(TEMPLATES_PATH, 'main.html'))
 
 class FoldersHandler(tornado.web.RequestHandler):
     """
@@ -259,7 +263,7 @@ if __name__ == "__main__":
     application = tornado.web.Application([
         (r"/", MainHandler),
         (r"/api/folders/?", FoldersHandler)
-    ], cookie_secret = 'CSOxb5p1sUcu24bW6pee')
+    ], cookie_secret = 'CSOxb5p1sUcu24bW6pee',**settings)
 
     application.listen(port)
     print "Listening on port: %s" % (port)

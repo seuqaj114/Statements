@@ -33,14 +33,26 @@ def populate_word_appearence():
 	cursor = db.statements.find()
 	print "%s statements to be searched..." % (cursor.count())
 
-	#	This part is super sloooooooooow!
+	word_list = db.word_list.find_one()["word_list"]
+	classifications = { word:{"one":0,"two":0,"three":0,"four":0,"five":0} for word in word_list}
+
+	#	Not so slow anymore!
 	for i in range(cursor.count()):
 		print "Statement %s" % i
 
 		statement = cursor.next()
 		statement_words = list(set(re.compile(r"[^a-zA-Z]+").split(statement["text"])))
+		statement_words.remove("")
 		for word in statement_words:
-			db.words.update({"name":word},{"$inc":{number_to_text[statement["stars"]]}})
+			if word in classifications:
+				classifications[word][number_to_text[statement["stars"]]]+=1
+	
+	for word in word_list:
+		db.words.update({"name":word},{"$inc":{"one":classifications[word]["one"],
+												"two":classifications[word]["two"],
+												"three":classifications[word]["three"],
+												"four":classifications[word]["four"],
+												"five":classifications[word]["five"]}})
 
 	print "Words' categories populated."
 	return 1

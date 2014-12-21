@@ -78,6 +78,15 @@ def calculate_word_category_probability():
 	"""
 	return 0
 
-def calculate_category_probabilities(text):
+def calculate_word_probabilities(string):
 
-	return 0	
+	word = db.words.find({"name":string})
+	probabilities = {"one":0,"two":0,"three":0,"four":0,"five":0}
+
+	for star in range(1,6):
+		conditional = float(db.statements.find({"words":word["name"],"stars":star}).count())/db.statements.find({"stars":star}).count()
+		probabilities[number_to_text[star]]=conditional
+
+	db.words.update({"_id":ObjectId(word["_id"])},{"$set":{conditionals:probabilities}})
+
+	return 1	

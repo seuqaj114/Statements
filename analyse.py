@@ -29,6 +29,20 @@ def create_word_list():
 
 	return word_list
 
+def add_word_list_to_statements():
+	cursor = db.statements.find()
+	print "%s statements to be updated..." % (cursor.count())
+
+	for i in range(cursor.count()):
+		print "Statement %s" % i
+
+		statement = cursor.next()
+		statement_words = list(set(re.compile(r"[^a-zA-Z]+").split(statement["text"])))
+		statement_words.remove("")
+		db.statements.update({"_id":ObjectId(statement["_id"])},{"words":statement_words})
+
+	print "Statements updated."
+
 def populate_word_appearence():
 	cursor = db.statements.find()
 	print "%s statements to be searched..." % (cursor.count())
@@ -63,3 +77,7 @@ def calculate_word_category_probability():
 		P(word|category)= #
 	"""
 	return 0
+
+def calculate_category_probabilities(text):
+
+	return 0	

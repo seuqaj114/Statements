@@ -1,6 +1,7 @@
 $("#evaluate").on("click",function(e){
 	e.preventDefault();
 
+	$("#classification").text("");
 	//Prevent empty input here!
 	text = $("#statement").val()
 

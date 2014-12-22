@@ -1,5 +1,6 @@
 import tornado.ioloop
 import tornado.web
+import tornado.httpserver
 
 from pymongo import MongoClient
 import os, binascii
@@ -17,8 +18,6 @@ TEMPLATES_PATH = os.path.join(dirname, 'templates')
 settings = { 
     'static_path': os.path.join(dirname, 'static')
     }
-
-port = 8000
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -46,7 +45,12 @@ if __name__ == "__main__":
         (r"/api/analyse?", AnalyseHandler)
     ], cookie_secret = 'CSOxb5p1sUcu24bW6pee',**settings)
 
-    application.listen(port)
+    http_server = tornado.httpserver.HTTPServer(application)
+    port = int(os.environ.get("PORT", 5000))
+    http_server.listen(port)
+
+    #application.listen(port)
+    
     print "Listening on port: %s" % (port)
 
     tornado.ioloop.IOLoop.instance().start()

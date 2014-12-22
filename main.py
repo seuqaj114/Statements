@@ -1,7 +1,6 @@
 import tornado.ioloop
 import tornado.web
-import tornado.websocket
-import bcrypt
+
 from pymongo import MongoClient
 import os, binascii
 from bson.json_util import dumps

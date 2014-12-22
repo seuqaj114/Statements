@@ -13,6 +13,12 @@ db = client.courier_db
 
 number_to_text = {1:"one",2:"two",3:"three",4:"four",5:"five"}
 text_to_number = {"one":1,"two":2,"three":3,"four":4,"five":5}
+statements_with_star = {1:db.new_statements.find({"stars":1}).count(),
+						2:db.new_statements.find({"stars":2}).count(),
+						3:db.new_statements.find({"stars":3}).count(),
+						4:db.new_statements.find({"stars":4}).count(),
+						5:db.new_statements.find({"stars":5}).count()}
+
 
 def create_word_list():
 	cursor = db.statements.find()
@@ -78,15 +84,28 @@ def calculate_word_category_probability():
 	"""
 	return 0
 
-def calculate_word_probabilities(string):
+def calculate_word_probabilities(word):
+	""" word must be a db.words query """
 
-	word = db.words.find({"name":string})
 	probabilities = {"one":0,"two":0,"three":0,"four":0,"five":0}
 
 	for star in range(1,6):
-		conditional = float(db.statements.find({"words":word["name"],"stars":star}).count())/db.statements.find({"stars":star}).count()
-		probabilities[number_to_text[star]]=conditional
+		conditional = float(word[number_to_text[star]])/statements_with_star[star]
+		probabilities[number_to_text[star]]=conditional*10
 
-	db.words.update({"_id":ObjectId(word["_id"])},{"$set":{conditionals:probabilities}})
+	db.words.update({"_id":ObjectId(word["_id"])},{"$set":{"conditionals":probabilities}})
 
-	return 1	
+	return 1
+
+def populate_word_probabilities():
+	cursor = db.words.find()
+	print "%s words to be searched..." % (cursor.count())
+
+	for i in range(cursor.count()):
+		print "Word %s" % i
+
+		word = cursor.next()
+
+		calculate_word_probabilities(word)
+
+	print "Populate complete."

@@ -1,7 +1,6 @@
 # Pattern to isolate words in text set(re.compile(r"[^a-zA-Z]+").split(text))
 
 from bs4 import BeautifulSoup
-import urllib2
 import re
 import sys
 

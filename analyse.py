@@ -8,6 +8,8 @@ import sys
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
+import parse
+
 client = MongoClient("mongodb://admin:admin@kahana.mongohq.com:10009/courier_db")
 db = client.courier_db
 
@@ -78,11 +80,36 @@ def populate_word_appearence():
 	return 1
 
 
-def calculate_word_category_probability():
-	"""
-		P(word|category)= #
-	"""
-	return 0
+def calculate_document_probabilities(raw_text):
+	words = parse.raw_text_to_words(raw_text)
+	print "Words to be calculated: %s" % (len(words))
+
+	probs = {1:1,2:1,3:1,4:1,5:1}
+	cursor = db.words.find({"name":{"$in":words}})
+
+	total_statements = db.new_statements.find().count()
+	cat_probs = { i:float(db.new_statements.find({"stars":i}).count())/total_statements for i in range(1,6)}
+
+	for i in range(cursor.count()):
+		#print "calculating word %s" % i
+		word = cursor.next()
+		if word["conditionals"]["one"]==0 or \
+			word["conditionals"]["two"]==0 or \
+			word["conditionals"]["three"]==0 or \
+			word["conditionals"]["four"]==0 or \
+			word["conditionals"]["five"]==0:
+			pass
+		else:
+			for j in probs:
+				probs[j]*=word["conditionals"][number_to_text[j]]
+
+	for j in probs:
+		probs[j]*=cat_probs[j]
+
+	prob_list = [probs[key] for key in probs]
+	stars = prob_list.index(max(prob_list))+1
+
+	return stars,probs
 
 def calculate_word_probabilities(word):
 	""" word must be a db.words query """

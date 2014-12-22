@@ -30,3 +30,9 @@ html, body {
 	font-size: 17px;
 	text-align: center;
 }
+
+#classification{
+	text-align: center;
+	font-size: 22px;
+	font-weight: bold;
+}

@@ -14,7 +14,8 @@ def clean_text(string):
 def raw_text_to_words(string):
 	clean_lower = clean_text(string.lower())
 	word_list = list(set(re.compile(r"[^a-zA-Z]+").split(clean_lower)))
-	word_list.remove("")
+	if "" in word_list:
+		word_list.remove("")
 
 	return word_list
 

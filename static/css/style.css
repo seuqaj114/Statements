@@ -13,8 +13,8 @@ html, body {
 }
 
 #statement {
-	height: 400px;
-	width: 600px;
+	height: 350px;
+	width: 700px;
 	font-size: 18px;
 }
 
@@ -35,4 +35,11 @@ html, body {
 	text-align: center;
 	font-size: 22px;
 	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+#disclaimer{
+	margin: 0 auto;
+	width: 60%;
+	text-align: center;
 }

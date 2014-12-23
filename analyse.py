@@ -107,8 +107,9 @@ def calculate_document_probabilities(raw_text):
 
 	prob_list = [probs[key] for key in probs]
 	stars = prob_list.index(max(prob_list))+1
+	exac = 1.0-max(prob_list)/sum(prob_list)
 
-	return stars,probs
+	return stars,exac,probs
 
 def calculate_word_probabilities(word):
 	""" word must be a db.words query """

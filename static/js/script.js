@@ -1,3 +1,4 @@
+
 $("#evaluate").on("click",function(e){
 	e.preventDefault();
 
@@ -17,6 +18,7 @@ $("#evaluate").on("click",function(e){
 		success:function(res){
 			console.log("Stars "+res.stars);
 			$("#classification").text("Mark: "+res.stars+" out of 5.");
+			$("#error").text("Error: "+res.exac*100+"%");
 		}
 	});
 });

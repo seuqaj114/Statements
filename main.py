@@ -35,10 +35,10 @@ class AnalyseHandler(tornado.web.RequestHandler):
         raw_text = self.get_argument("text",None)
         print raw_text
 
-        stars,probs = analyse.calculate_document_probabilities(raw_text)
+        stars,exac,probs = analyse.calculate_document_probabilities(raw_text)
 
-        print stars, probs
-        self.finish({"stars":stars,"probs":probs})
+        print stars, exac, probs
+        self.finish({"stars":stars,"exac":exac,"probs":probs})
 
 if __name__ == "__main__":
     application = tornado.web.Application([

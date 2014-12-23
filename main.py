@@ -44,7 +44,7 @@ if __name__ == "__main__":
     application = tornado.web.Application([
         (r"/", MainHandler),
         (r"/api/analyse?", AnalyseHandler),
-        (r'/favicon.ico', tornado.web.StaticFileHandler, {'path': favicon_path})
+        (r'/favicon.ico', tornado.web.StaticFileHandler, {'path': FAVICON_PATH})
     ], cookie_secret = 'CSOxb5p1sUcu24bW6pee',**settings)
 
     http_server = tornado.httpserver.HTTPServer(application)

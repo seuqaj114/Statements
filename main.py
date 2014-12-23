@@ -33,7 +33,6 @@ class AnalyseHandler(tornado.web.RequestHandler):
 
     def post(self):
         raw_text = self.get_argument("text",None)
-        print raw_text
 
         stars,exac,probs = analyse.calculate_document_probabilities(raw_text)
 

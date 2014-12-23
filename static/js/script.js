@@ -18,7 +18,7 @@ $("#evaluate").on("click",function(e){
 		success:function(res){
 			console.log("Stars "+res.stars);
 			$("#classification").text("Mark: "+res.stars+" out of 5.");
-			$("#error").text("Error: "+res.exac*100+"%");
+			$("#error").text("Error: "+Math.round(res.exac*100*100)/100+"%");
 		}
 	});
 });

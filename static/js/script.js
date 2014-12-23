@@ -19,5 +19,10 @@ $("#evaluate").on("click",function(e){
 			$("#classification").text("Mark: "+res.stars+" out of 5.");
 		}
 	});
+});
 
-})
+$("#instructions").on("click",function(e){
+	e.preventDefault();
+
+	alert("needed no one ever!");
+});

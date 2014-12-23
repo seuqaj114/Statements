@@ -14,6 +14,7 @@ import analyse
 
 dirname = os.path.dirname(__file__)
 TEMPLATES_PATH = os.path.join(dirname, 'templates')
+FAVICON_PATH = os.path.join(dirname,"favicon.ico")
 
 settings = { 
     'static_path': os.path.join(dirname, 'static')
@@ -42,7 +43,8 @@ class AnalyseHandler(tornado.web.RequestHandler):
 if __name__ == "__main__":
     application = tornado.web.Application([
         (r"/", MainHandler),
-        (r"/api/analyse?", AnalyseHandler)
+        (r"/api/analyse?", AnalyseHandler),
+        (r'/favicon.ico', tornado.web.StaticFileHandler, {'path': favicon_path})
     ], cookie_secret = 'CSOxb5p1sUcu24bW6pee',**settings)
 
     http_server = tornado.httpserver.HTTPServer(application)

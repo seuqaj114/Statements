@@ -35,7 +35,10 @@ html, body {
 	text-align: center;
 	font-size: 22px;
 	font-weight: bold;
-	margin-bottom: 10px;
+}
+
+#error{
+	margin-bottom: 6px;
 }
 
 #disclaimer{

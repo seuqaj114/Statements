@@ -13,6 +13,7 @@ $("#evaluate").on("click",function(e){
 
 	$.ajax({
 		type: "POST",
+		contentType: "charset=UTF-8",
 		url:"https://classify-my-statement.herokuapp.com/api/analyse",
 		data:{"text":text},
 		success:function(res){

@@ -24,5 +24,5 @@ $("#evaluate").on("click",function(e){
 $("#instructions").on("click",function(e){
 	e.preventDefault();
 
-	alert("needed no one ever!");
+	$("#classification").text("needed no one ever!");
 });

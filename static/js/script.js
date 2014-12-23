@@ -5,6 +5,8 @@ $("#evaluate").on("click",function(e){
 	$("#classification").text("");
 	//Prevent empty input here!
 	text = $("#statement").val()
+	//text.replace(/[^\x00-\x7F]/g, " ");
+	console.log(text);
 
 	if(text.length < 2){
 		console.log("Text area empty!");
@@ -13,8 +15,8 @@ $("#evaluate").on("click",function(e){
 
 	$.ajax({
 		type: "POST",
-		contentType: "charset=UTF-8",
-		url:"https://classify-my-statement.herokuapp.com/api/analyse",
+		//url:"https://classify-my-statement.herokuapp.com/api/analyse",
+		url:"http://127.0.0.1:5000/api/analyse",
 		data:{"text":text},
 		success:function(res){
 			console.log("Stars "+res.stars);

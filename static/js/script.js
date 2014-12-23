@@ -15,8 +15,8 @@ $("#evaluate").on("click",function(e){
 
 	$.ajax({
 		type: "POST",
-		//url:"https://classify-my-statement.herokuapp.com/api/analyse",
-		url:"http://127.0.0.1:5000/api/analyse",
+		url:"https://classify-my-statement.herokuapp.com/api/analyse",
+		//url:"http://127.0.0.1:5000/api/analyse",
 		data:{"text":text},
 		success:function(res){
 			console.log("Stars "+res.stars);
